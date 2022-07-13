@@ -84,6 +84,7 @@ void loop() {
     {
         if (t2.done())                                             // TRANSITION CONDITION // Timer 2 run out
         {
+            t2.reset();
             dispatchCargo.start();
             Serial.println("Cargo is dispatched!");
             state = 3;
@@ -96,7 +97,6 @@ void loop() {
         if(cargoDetector.read() == 1)                              // TRANSITION CONDITION // Loading and unloading sensor detected cargo
         {
             state = 0;
-            t0.start();
             Serial.println("Change to State 0!");
         }
     }

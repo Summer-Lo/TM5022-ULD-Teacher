@@ -76,6 +76,7 @@ void loop() {
         if (t0.done())                            // TRANSITION CONDITION
         {
             Serial.println("Timer 0 run out!");
+            t0.reset();
             dispatchCargo.start();
             Serial.println("Cargo is dispatched!");
             state = 2;
