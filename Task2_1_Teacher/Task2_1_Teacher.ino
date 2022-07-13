@@ -1,10 +1,11 @@
 /*
  * Autor: Summer Lo
- * Updated date: 08/07/2022
+ * Updated date: 13/07/2022
  * Description: Design for counting the traveling time between Front sensor (Virtual) 
  * and Loading and Unloading Station Sensor (Virtual)
  * GPIO Output read status LOW = 0 
  * GPIO Output read status HIGH = 1
+ * Update: Deleted Timer2
  */
 #include "stopper.h"
 #include <neotimer.h>
@@ -33,9 +34,6 @@ Neotimer t1 = Neotimer(3000);   // 3 second timer
 Neotimer t2 = Neotimer(5000);   // 5 second timer
 
 int state = 0;
-int deliver = 0;
-char message;
-char store;
 unsigned long timer1;
 unsigned long timer2;
 unsigned long timeDiff;
@@ -44,8 +42,6 @@ void setup() {
     Serial.begin(9600);
     t0.reset();
     t2.reset();
-    //t0.start();
-    t2.start();
 
     // Original Position
     bottomConveyor.start();
@@ -65,17 +61,14 @@ void loop() {
     
     if (state == 0)                                         // Open all stopper and start and wait for node-red 's' response
     {
-        if(t2.done())
-        {   
-            //Serial.println("Timer 2 End!");
-            if (locationSensor.read() == 1)                            // TRANSITION CONDITION // 's' is transmitted by node-red
-            {
-                timer1 = millis();
-                //Serial.println(timer1);
-                state = 1;
-                //Serial.println("Change to State 1!");
-            }  
-        }
+        //Serial.println("Timer 2 End!");
+        if (locationSensor.read() == 1)                            // TRANSITION CONDITION // 's' is transmitted by node-red
+        {
+            timer1 = millis();
+            //Serial.println(timer1);
+            state = 1;
+            //Serial.println("Change to State 1!");
+        }  
     }
     if (state == 1)
     {
@@ -86,7 +79,6 @@ void loop() {
             Serial.println(timer2-timer1);
             state = 0;
             //Serial.println("Change to State 0");
-            t2.start();
         }
     }
 }

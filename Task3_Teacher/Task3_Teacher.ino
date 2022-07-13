@@ -1,6 +1,6 @@
 /*
  * Autor: Summer Lo
- * Updated date: 08/07/2022
+ * Updated date: 13/07/2022
  * Description: Design a step squence program for attaching the action in simultation and PLC via Raspberry Pi
  * 
  * GPIO Output read status LOW = 0 
@@ -33,9 +33,6 @@ Neotimer t1 = Neotimer(3000);   // 3 second timer
 Neotimer t2 = Neotimer(11000);   // 5.3 second timer
 
 int state = 0;
-int deliver = 0;
-char message;
-char store;
 unsigned long timer1;
 unsigned long timer2;
 unsigned long timeDiff;
@@ -44,8 +41,6 @@ void setup() {
     Serial.begin(9600);
     t0.reset();
     t2.reset();
-    //t0.start();
-    t2.start();
 
     // Original Position
     bottomConveyor.activate();

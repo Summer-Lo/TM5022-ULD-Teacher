@@ -1,6 +1,6 @@
 /*
  * Autor: Summer Lo
- * Updated date: 08/07/2022
+ * Updated date: 13/07/2022
  * Description: Design for counting the traveling time between Dispatch Sensor (Physical) 
  * and Loading and Unloading Station Sensor (Physical)
  * GPIO Output read status LOW = 0
@@ -12,9 +12,6 @@
 int numBlinks=0;
 int count = 0;
 int state = 0;
-int deliver = 0;
-char message;
-char store;
 unsigned long timer1;
 unsigned long timer2;
 unsigned long timeDiff;
@@ -43,8 +40,6 @@ void setup() {
     Serial.begin(9600);
     t0.reset();
     t2.reset();
-    //t0.start();
-    //t2.start();
 
     // Original Position
     bottomConveyor.start();
