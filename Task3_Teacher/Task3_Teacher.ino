@@ -31,7 +31,7 @@ sensor palletDetector(5);
 // Timer Setup
 Neotimer t0 = Neotimer(1600);   // 1.6 second timer
 Neotimer t1 = Neotimer(3000);   // 3 second timer
-Neotimer t2 = Neotimer(11000);   // 5.3 second timer
+Neotimer t2 = Neotimer(12000);   // 5.3 second timer
 
 int state = 0;
 int deliver = 0;
