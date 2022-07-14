@@ -60,7 +60,7 @@ void loop() {
     {
         // put your main code here, to run repeatedly:
         Serial.println("Please input the number to set the state (1 or 2)!");
-        stateInput = Serial.parseInt(); //Read the data the user has input
+        stateInput = Serial.parseInt();             //Read the data the user has input
         Serial.println("State: "+ stateInput);
         while (Serial.available() == 0) {
             count++;
