@@ -49,7 +49,7 @@ void setup() {
     delay(200);
     dispatchCargo.activate();
     delay(200);
-    resetCargo.activate();
+    verticalCargo.activate();
     delay(200);
 
     Serial.println("Start\n");

@@ -10,9 +10,9 @@
 #include "stopper.h"
 #include <neotimer.h>
 #include "sensor.h"
-int numBlinks=0;
 int count = 0;
 int state = 0;
+int stateInput = 0;
 unsigned long timer1;
 unsigned long timer2;
 unsigned long timeDiff;
@@ -47,7 +47,7 @@ void setup() {
     delay(200);
     dispatchCargo.start();
     delay(200);
-    resetCargo.start();
+    verticalCargo.start();
     delay(200);
 
     Serial.println("Start\n");
