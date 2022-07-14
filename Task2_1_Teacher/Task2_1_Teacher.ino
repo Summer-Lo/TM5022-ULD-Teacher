@@ -1,11 +1,11 @@
 /*
  * Autor: Summer Lo
- * Updated date: 13/07/2022
+ * Updated date: 14/07/2022
  * Description: Design for counting the traveling time between Front sensor (Virtual) 
  * and Loading and Unloading Station Sensor (Virtual)
  * GPIO Output read status LOW = 0 
  * GPIO Output read status HIGH = 1
- * Update: Deleted Timer2
+ * Updates: Teacher version
  */
 #include "stopper.h"
 #include <neotimer.h>
@@ -18,7 +18,7 @@ stopper leftStopper(0);
 stopper rightStopper(1);
 stopper bottomConveyor(2);
 stopper dispatchCargo(3);
-stopper resetCargo(4);
+stopper verticalCargo(4);
 
 //GPIO SetUp (Sensor)
 sensor cargoDetector(0);
@@ -34,6 +34,7 @@ Neotimer t1 = Neotimer(3000);   // 3 second timer
 Neotimer t2 = Neotimer(5000);   // 5 second timer
 
 int state = 0;
+int deliver = 0;
 unsigned long timer1;
 unsigned long timer2;
 unsigned long timeDiff;
@@ -59,26 +60,25 @@ void setup() {
 void loop() {
     // put your main code here, to run repeatedly:
     
-    if (state == 0)                                         // Open all stopper and start and wait for node-red 's' response
+    if (state == 0)                                     // State 0
     {
-        //Serial.println("Timer 2 End!");
-        if (locationSensor.read() == 1)                            // TRANSITION CONDITION // 's' is transmitted by node-red
+        if (locationSensor.read() == 1)             // Check the location sensor
         {
-            timer1 = millis();
-            //Serial.println(timer1);
-            state = 1;
-            //Serial.println("Change to State 1!");
+            timer1 = millis();                      // Get the current time
+            state = 1;                              // Set state = 1
+            Serial.println("Change to State 1!");
         }  
     }
-    if (state == 1)
+    else if (state == 1)                               // State 1
     {
-        if(palletDetector.read() == 1)
+        // Write your code - Begin
+        if(palletDetector.read() == 1)                 // Check the pallet detector
         {
-            timer2 = millis();
-            //Serial.println(timer2);
-            Serial.println(timer2-timer1);
-            state = 0;
-            //Serial.println("Change to State 0");
+            timer2 = millis();                         // Get the current time
+            Serial.println(timer2-timer1);            
+            state = 0;                                 // Set state = 0
+            Serial.println("Change to State 0");
         }
+        // Write your code - End
     }
 }

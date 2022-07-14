@@ -1,10 +1,11 @@
 /*
  * Autor: Summer Lo
- * Updated date: 13/07/2022
+ * Updated date: 14/07/2022
  * Description: Design a step squence program for attaching the action in simultation and PLC via Raspberry Pi
  * 
  * GPIO Output read status LOW = 0 
  * GPIO Output read status HIGH = 1
+ * Updates: Teacher version
  */
 #include "stopper.h"
 #include <neotimer.h>
@@ -17,7 +18,7 @@ stopper leftStopper(0);
 stopper rightStopper(1);
 stopper bottomConveyor(2);
 stopper dispatchCargo(3);
-stopper resetCargo(4);
+stopper verticalCargo(4);
 
 //GPIO SetUp (Sensor)
 sensor cargoDetector(0);
@@ -33,6 +34,7 @@ Neotimer t1 = Neotimer(3000);   // 3 second timer
 Neotimer t2 = Neotimer(11000);   // 5.3 second timer
 
 int state = 0;
+int deliver = 0;
 unsigned long timer1;
 unsigned long timer2;
 unsigned long timeDiff;
@@ -58,45 +60,47 @@ void setup() {
 void loop() {
     // put your main code here, to run repeatedly:
     
-    if (state == 0)                                                // Check cargo ready or not
+    if (state == 0)                                     // State 0
     {
-        if (homeSensor.read() == 1)                            // TRANSITION CONDITION // Dispatch sensor detected cargo
+        if (homeSensor.read() == 1)                     // Check the home sensor 
         {
-            state = 1;
-            Serial.println("The Cargo is ready to dispatch");
+            state = 1;                                  // Set state = 1
+            Serial.println("The Cargo is ready!");
             Serial.println("Change to State 1!");
         }  
     }
     
-    else if (state == 1)                                           // Check Front Sensor signal
+    else if (state == 1)                                // State 1
     {
-        //Serial.println("Timer 2 End!");
-        if (locationSensor.read() == 1)                               // TRANSITION CONDITION // Front Sensor detected cargo
+        // Write your code - Begin
+        if (locationSensor.read() == 1)                 // Check the location sensor 
         {
-            state = 2;
+            state = 2;                                  // Set state = 2
             t2.start();
-            Serial.println("Front Sensor read sucessfully!");
+            Serial.println("Start the timer!");
             Serial.println("Change to State 2!");
         }  
+        // Write your code - End
     }
     
-    else if (state == 2)                                           // Dispatch cargo when time out
+    else if (state == 2)                                // State 2
     {
-        if (t2.done())                                             // TRANSITION CONDITION // Timer 2 run out
+        // Write your code - Begin
+        if (t2.done())                                  // Check the timer runs out
         {
-            t2.reset();
-            dispatchCargo.start();
-            Serial.println("Cargo is dispatched!");
-            state = 3;
+            state = 3;                                  // Set state = 3
+            dispatchCargo.start();                      // Dispatch the cargo
+            Serial.println("Dispatch the cargo!");
             Serial.println("Change to State 3!");
         }
+        // Write your code - End
     }
 
-    else if (state == 3)                                           // End process and return
+    else if (state == 3)                                // State 3
     {
-        if(cargoDetector.read() == 1)                              // TRANSITION CONDITION // Loading and unloading sensor detected cargo
+        if(cargoDetector.read() == 1)                   // Check the cargo detector
         {
-            state = 0;
+            state = 0;                                  // Set state = 0
             Serial.println("Change to State 0!");
         }
     }

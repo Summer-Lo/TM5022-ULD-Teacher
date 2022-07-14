@@ -1,10 +1,11 @@
 /*
  * Autor: Summer Lo
- * Updated date: 13/07/2022
+ * Updated date: 14/07/2022
  * Description: Design a step squence program for complete the mission
  * 
  * GPIO Output read status LOW = 0 
  * GPIO Output read status HIGH = 1
+ * Updates: Teacher version
  */
 #include "stopper.h"
 #include <neotimer.h>
@@ -17,7 +18,7 @@ stopper leftStopper(0);
 stopper rightStopper(1);
 stopper bottomConveyor(2);
 stopper dispatchCargo(3);
-stopper resetCargo(4);
+stopper verticalCargo(4);
 
 //GPIO SetUp (Sensor)
 sensor cargoDetector(0);
@@ -33,6 +34,7 @@ Neotimer t1 = Neotimer(3000);   // 3 second timer
 Neotimer t2 = Neotimer(5000);   // 5 second timer
 
 int state = 0;
+int deliver = 0;
 unsigned long timer1;
 unsigned long timer2;
 unsigned long timeDiff;
@@ -58,39 +60,41 @@ void setup() {
 void loop() {
     // put your main code here, to run repeatedly:
     
-    if (state == 0)                               // Practicing GPIO connection between Arduino and Raspberry Pi
+    if (state == 0)                                 // State 0
     {
-        //Serial.println("Timer 2 End!");
-        if (locationSensor.read() == 1)              // TRANSITION CONDITION 
+        if (locationSensor.read() == 1)             // Check the location sensor
         {
-            state = 1;
-            Serial.println("Front Sensor read sucessfully!");
-            t0.start();
-            Serial.println("Change to State 1!");
+            Serial.println("Location sensor is activated!");
+            state = 1;                              // Set state = 1
+            t0.start();                             // Start the timer t0
+            Serial.println("Change to State 1!");  
         }  
     }
     
-    else if (state == 1)                          // Practicing Timing counter process
+    else if (state == 1)                            // State 1
     {
-        //Serial.println("Timer 2 End!");
-        if (t0.done())                            // TRANSITION CONDITION
+        if (t0.done())                              // Check the t0 > 2s
         {
-            Serial.println("Timer 0 run out!");
+            // Write your code - Begin
             t0.reset();
-            dispatchCargo.start();
+            Serial.println("The t0 runs out!");
             Serial.println("Cargo is dispatched!");
-            state = 2;
+            dispatchCargo.start();                  // Disptach the cargo
+            state = 2;                              // Set state = 2
             Serial.println("Change to State 2!");
+            // Write your code - End
         }  
     }
-    
-    else if (state == 2)                          // Practicing Serial Read from user input
+
+    else if (state == 2)                            // State 2
     {
-        if (Serial.read() == 'e')                 // TRANSITION CONDITION
+        // Write your code - Begin 
+        if (Serial.read() == 'e')                   // Check the serial input == "e" character
         {
             Serial.println("Done!");
-            state = 0;
+            state = 0;                              // Set state = 0
             Serial.println("Change to State 0!");
         }
+        // Write your code - End        
     }
 }
