@@ -47,8 +47,8 @@ void setup() {
     // Original Position
     bottomConveyor.activate();
     delay(200);
-    dispatchCargo.activate();
-    delay(200);
+    //dispatchCargo.activate();
+    //delay(200);
     verticalCargo.activate();
     delay(200);
 
