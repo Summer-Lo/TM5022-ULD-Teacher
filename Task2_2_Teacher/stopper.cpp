@@ -8,6 +8,7 @@ stopper::stopper(int pin)
     if (pin == 2) _pin = BOTTOM_CONVEYOR_PIN;     // bottom conveyor
     if (pin == 3) _pin = DISPATCH_CARGO_PIN;      // dispatch cargo
     if (pin == 4) _pin = RESET_CARGO_PIN;         // reset cargo
+    if (pin == 5) _pin = DISPATCH_CARGO_NO_VREP_PIN;
     pinMode(_pin,OUTPUT);        // set pin as the GPIO output pin
     count = 0;
     previousStatus = 0;                    // 0 == open and 1 == close

@@ -10,6 +10,7 @@
 #define BOTTOM_CONVEYOR_PIN 11
 #define DISPATCH_CARGO_PIN 10
 #define RESET_CARGO_PIN 9
+#define DISPATCH_CARGO_NO_VREP_PIN 8
 
 class stopper
 {
