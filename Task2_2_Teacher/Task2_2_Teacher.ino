@@ -23,6 +23,7 @@ stopper rightStopper(1);
 stopper bottomConveyor(2);
 stopper dispatchCargo(3);
 stopper verticalCargo(4);
+stopper ULDsetup(5);
 
 //GPIO SetUp (Sensor)
 sensor cargoDetector(0);
@@ -33,9 +34,9 @@ sensor resetSensor(4);
 sensor palletDetector(5);
 
 // Timer Setup
-Neotimer t0 = Neotimer(3000);   // 3 second timer
+Neotimer t0 = Neotimer(1600);   // 1.6 second timer
 Neotimer t1 = Neotimer(3000);   // 3 second timer
-Neotimer t2 = Neotimer(5000);   // 5 second timer
+Neotimer t2 = Neotimer(13500);   // 5.3 second timer
 
 void setup() {
     Serial.begin(9600);
@@ -43,11 +44,12 @@ void setup() {
     t2.reset();
 
     // Original Position
-    bottomConveyor.start();
+    bottomConveyor.activate();
     delay(200);
-    dispatchCargo.start();
+    //dispatchCargo.activate();
+    ULDsetup.activate();
     delay(200);
-    verticalCargo.start();
+    verticalCargo.activate();
     delay(200);
 
     Serial.println("Start\n");
