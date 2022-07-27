@@ -3,7 +3,7 @@
 urlULD="/home/pi/Desktop/TM5022-ULD"
 fileULD="${urlULD##*/}"
 urlULDTeacher="/home/pi/Desktop/TM5022-ULD-Teacher"
-fileULDTeacher="${urlULD##*/}"
+fileULDTeacher="${urlULDTeacher##*/}"
 cd
 [ -d "$fileULDTeacher" ] && echo "Found" && sudo rm -r "$fileULDTeacher" && echo "Deleted"
 cd Desktop
